@@ -1,0 +1,94 @@
+\documentclass[black,white]{beamer}
+\usepackage{beamerthemesplit}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{lmodern}
+\usepackage{tikz}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{lmodern}
+\usepackage{pifont}
+\usepackage{svg} % Requires inkscape
+\usepackage{tikz}
+\usetikzlibrary{mindmap}
+\usepackage{verbatim}
+
+\beamertemplatenavigationsymbolsempty
+\usecolortheme{dove}
+\useoutertheme{infolines}
+\useinnertheme{rectangles}
+
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\bigcmark}{{\large\textcolor{green}\cmark}}
+\newcommand{\xmark}{\ding{55}}
+\newcommand{\bigxmark}{{\large\textcolor{red}\xmark}}
+\newcommand\blfootnote[1]{%
+  \begingroup
+  \renewcommand\thefootnote{}\footnote{#1}%
+  \addtocounter{footnote}{-1}%
+  \endgroup
+}
+
+\definecolor{ashgrey}{rgb}{0.7, 0.75, 0.71}
+\definecolor{charcoal}{rgb}{0.21, 0.27, 0.31}
+\definecolor{powderblue}{rgb}{0.69, 0.88, 0.9}
+\definecolor{layerblue}{RGB}{213, 234, 254}
+\newcommand\sectioncolor{\setbeamercolor{background canvas}{bg=layerblue}}
+
+\title[Example]{Example Title}
+\institute{Cilium.io}
+\author[Joe Stringer]{Joe Stringer}
+
+\setbeamertemplate{footline}
+{
+    \leavevmode%
+    \hbox{%
+        \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
+            \usebeamerfont{author in head/foot}\insertshortauthor
+        \end{beamercolorbox}%
+        \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
+            \usebeamerfont{title in head/foot}\insertshorttitle
+        \end{beamercolorbox}%
+        \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}%
+            \usebeamerfont{date in head/foot}\insertshortdate{}\hspace*{2em}
+            \insertframenumber{} / \inserttotalframenumber\hspace*{2ex}
+        \end{beamercolorbox}}%
+        \vskip0pt%
+}
+
+\newcommand\newsectionpage[1]{
+    \section{}
+    {\sectioncolor
+        \begin{frame}
+            \vfill
+            \centering
+            \section{#1}
+            \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+                \usebeamerfont{title}\insertsectionhead\par%
+            \end{beamercolorbox}
+            \vfill
+        \end{frame}
+    }
+    \section{#1}
+}
+
+\date[Nov 13, 2018]{Linux Plumbers 2018, Vancouver, BC}
+
+\begin{document}
+    {\sectioncolor
+    \begin{frame}
+    \titlepage
+    \end{frame}
+    }
+
+    \section{}
+    \begin{frame}{Thank you}
+        \vfill
+    \centering
+    Joe Stringer \\\medskip
+    joe@cilium.io
+    \vfill
+    \end{frame}
+
+\end{document}
