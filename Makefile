@@ -1,28 +1,29 @@
-TITLE=lpc18-sk-lookup
+TITLE=lpcXX-topic
 PAPER=$(TITLE).pdf
 SLIDES=$(TITLE)-slides.pdf
+XDG_OPEN ?= xdg-open
 
 all: $(PAPER) $(SLIDES)
 
 $(PAPER):
+	rm -f $(PAPER)
 	$(MAKE) -C paper/
 	mv paper/paper.pdf $(PAPER)
 
 paper: $(PAPER)
 
 $(SLIDES):
-	$(MAKE) -C slides/
 	rm -f $(SLIDES)
-	mv slides/slides.pdf $(SLIDES)
+	$(MAKE) -C slides
+	cp slides/slides.pdf $(SLIDES)
 
-slides:
-	$(MAKE) $(SLIDES)
+slides: $(SLIDES)
 
 open-paper: $(PAPER)
-	xdg-open $(PAPER)
+	$(XDG_OPEN) $(PAPER)
 
 open-slides: $(SLIDES)
-	xdg-open $(SLIDES)
+	$(XDG_OPEN) $(SLIDES)
 
 open: open-paper open-slides
 

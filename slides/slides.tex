@@ -1,7 +1,12 @@
 \documentclass[black,white]{beamer}
 \usepackage{beamerthemesplit}
 \usepackage{amsmath}
+\usepackage{adjustbox}
+\usepackage{bookmark}
+\usepackage{courier}
+\usepackage[T1]{fontenc}
 \usepackage{hyperref}
+\usepackage[utf8]{inputenc}
 \usepackage{listings}
 \usepackage{lmodern}
 \usepackage{tikz}
@@ -9,10 +14,14 @@
 \usepackage{listings}
 \usepackage{lmodern}
 \usepackage{pifont}
+\usepackage{subcaption}
 \usepackage{svg} % Requires inkscape
+\usepackage{tabularx}
 \usepackage{tikz}
 \usetikzlibrary{mindmap}
 \usepackage{verbatim}
+\usepackage{xcolor}
+\usepackage{yaml}
 
 \beamertemplatenavigationsymbolsempty
 \usecolortheme{dove}
@@ -36,6 +45,21 @@
 \definecolor{layerblue}{RGB}{213, 234, 254}
 \newcommand\sectioncolor{\setbeamercolor{background canvas}{bg=layerblue}}
 
+% Align hash to font
+\let\oldhash\#%
+\DeclareRobustCommand{\#}{\adjustbox{valign=B,totalheight=.57\baselineskip}{\oldhash}}%
+
+\newcommand{\link}[1]{{\large\color{blue}\href{#1}{#1}}}
+
+% Support backup slides with their own numbering scheme
+\newcommand{\backupbegin}{
+   \newcounter{finalframe}
+   \setcounter{finalframe}{\value{framenumber}}
+}
+\newcommand{\backupend}{
+   \setcounter{framenumber}{\value{finalframe}}
+}
+
 \title[Example]{Example Title}
 \institute{Cilium.io}
 \author[Joe Stringer]{Joe Stringer}
@@ -58,7 +82,7 @@
 }
 
 \newcommand\newsectionpage[1]{
-    \section{}
+    \section*{}
     {\sectioncolor
         \begin{frame}
             \vfill
@@ -70,25 +94,72 @@
             \vfill
         \end{frame}
     }
-    \section{#1}
+    \section*{#1}
 }
 
-\date[Nov 13, 2018]{Linux Plumbers 2018, Vancouver, BC}
+\newcommand\suspense{
+    \pause $\rightarrow$
+}
+
+\date[Month XX, 20XX]{Linux Plumbers 20XX, Location}
 
 \begin{document}
+    \section*{}
     {\sectioncolor
     \begin{frame}
-    \titlepage
+        \titlepage
+        \begin{figure}
+            \includegraphics[scale=0.2]{lpc-logo.png}
+        \end{figure}
     \end{frame}
     }
 
-    \section{}
-    \begin{frame}{Thank you}
-        \vfill
-    \centering
-    Joe Stringer \\\medskip
-    joe@cilium.io
-    \vfill
+    \begin{frame}{Overview}
+        \tableofcontents
     \end{frame}
+
+    \section{Background}
+
+    \newsectionpage{Section 2}
+
+    \begin{frame}{Summary}
+        \begin{itemize}
+            \item Point 1
+        \end{itemize}
+    \end{frame}
+
+    \section*{}
+    \begin{frame}{Thank you}
+        \centering
+        \vfill
+        \begin{table}
+            \begin{subtable}[l]{0.6\textwidth}
+                \begin{tabular}{rl}
+                    \multicolumn{2}{l}{\textbf{More information}} \\ \\
+                    \includesvg[width=0.045\textwidth]{www.svg}
+                    & \link{https://cilium.io} \\
+                    \includesvg[width=0.045\textwidth]{slack.svg}
+                    & \link{https://cilium.io/slack} \\
+                    \includesvg[width=0.045\textwidth]{github.svg}
+                    & \link{https://github.com/cilium/cilium} \\
+                    \includesvg[width=0.045\textwidth]{twitter.svg}
+                    & \link{https://twitter.com/ciliumproject} \\
+                \end{tabular}
+            \end{subtable}
+            \begin{subtable}[r]{0.35\textwidth}
+                \includesvg[width=0.9\textwidth]{cilium-gopher.svg}
+            \end{subtable}
+        \end{table}
+        \pause
+        \vfill
+    \end{frame}
+
+    \appendix
+    \backupbegin
+
+    \begin{frame}{Backup Slide}
+    \end{frame}
+
+    \backupend
 
 \end{document}
