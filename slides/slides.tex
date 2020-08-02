@@ -123,7 +123,98 @@
 
     \section{Background}
 
-    \newsectionpage{Section 2}
+    \begin{frame}[fragile]{In the beginning...}
+        \begin{itemize}
+            \item There was the \verb+skb->mark+. And it was good. \bigskip
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}[fragile]{A brief history}
+        \begin{itemize}
+            \item \verb+fwmark+ \bigskip
+            \item \verb+pkt_mark+ \bigskip
+            \item \verb+ctmark+ \bigskip
+            \item \verb+SO_MARK+ \bigskip
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Cloud Native networking}
+        \todo{Add logos for all the projects I refer to}
+    \end{frame}
+
+    \newsectionpage{Use cases}
+
+    \begin{frame}{Multi-homing}
+        \todo{aws-vpc-cni-k8s / Cilium}
+    \end{frame}
+
+    \begin{frame}{Application identity}
+        \todo{Cilium mark transfer}
+    \end{frame}
+
+    \begin{frame}{Network policy}
+        \todo{Include iptables match+mark -> ... -> drop}
+        \todo{Varies - mark if allowed or mark if denied.}
+    \end{frame}
+
+    \begin{frame}{IP masquerade}
+        \todo{Typically 1 bit "apply masquerade to this traffic". Occasionally more.}
+        % Notable exception: OpenShift "egress traffic from this entity with external IP ___" -> full IP into mark.
+    \end{frame}
+
+    \begin{frame}{Exposing services}
+        \todo{HostPort / ExternalIPs / NodePort features}
+    \end{frame}
+
+    \begin{frame}{Service proxy}
+        \todo{Cilium, Istio, AWS-appmesh}
+    \end{frame}
+
+    \begin{frame}{Transparent encryption}
+        \todo{Cilium, Weave}
+    \end{frame}
+
+    \newsectionpage{Common themes}
+
+    \begin{frame}{System control}
+        \todo{Bitwise}
+        \todo{Full-mark}
+    \end{frame}
+
+    \begin{frame}{Internal state tracking}
+        \todo{Can be either within a subsystem or across subsystem components
+              programmed by the same application}
+    \end{frame}
+
+    \newsectionpage{Avoiding conflicts via eBPF}
+
+    \begin{frame}{Evaluate interoperability}
+        \todo{Eg most of these software must work with k8s. Default configuration
+              makes BIT 15 -> Drop.} \bigskip
+        \todo{Scope changes depending on how ambitious you are. Cilium aims to
+              allow swapping in/out routing / service layers.
+              Means that when you run alternative implementation, there must be
+              co-ordination.} \bigskip
+    \end{frame}
+
+    \begin{frame}{Consolidate on fewer APIs}
+        \todo{Building a more cohesive dataplane in the most flexible way we can: eBPF}
+    \end{frame}
+
+    \begin{frame}[fragile]{Internal state transfer: Control block}
+        \todo{skb->cb for transferring information internally.}
+    \end{frame}
+
+    \begin{frame}{Purpose-built subsystem co-ordination}
+        \begin{itemize}
+            \item \todo{tproxy eBPF - saved 16 bits of 32-bit mark} \bigskip
+            \item \todo{floated - eBPF/xfrm} \bigskip
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Dynamic extension of metadata}
+        \todo{CONFIG\_SKB\_EXTENSIONS}
+    \end{frame}
 
     \section*{Prologue}
     \begin{frame}{Summary}
