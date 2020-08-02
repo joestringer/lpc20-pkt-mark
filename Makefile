@@ -1,4 +1,4 @@
-TITLE=lpcXX-topic
+TITLE=lpc20-pkt-mark
 PAPER=$(TITLE).pdf
 SLIDES=$(TITLE)-slides.pdf
 XDG_OPEN ?= xdg-open
