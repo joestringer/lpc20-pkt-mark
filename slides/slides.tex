@@ -82,12 +82,11 @@
 }
 
 \newcommand\newsectionpage[1]{
-    \section*{}
+    \section*{#1}
     {\sectioncolor
         \begin{frame}
             \vfill
             \centering
-            \section{#1}
             \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
                 \usebeamerfont{title}\insertsectionhead\par%
             \end{beamercolorbox}
