@@ -3,14 +3,7 @@ PAPER=$(TITLE).pdf
 SLIDES=$(TITLE)-slides.pdf
 XDG_OPEN ?= xdg-open
 
-all: $(PAPER) $(SLIDES)
-
-$(PAPER):
-	rm -f $(PAPER)
-	$(MAKE) -C paper/
-	mv paper/paper.pdf $(PAPER)
-
-paper: $(PAPER)
+all: $(SLIDES)
 
 $(SLIDES):
 	rm -f $(SLIDES)
@@ -19,16 +12,12 @@ $(SLIDES):
 
 slides: $(SLIDES)
 
-open-paper: $(PAPER)
-	$(XDG_OPEN) $(PAPER)
-
 open-slides: $(SLIDES)
 	$(XDG_OPEN) $(SLIDES)
 
-open: open-paper open-slides
+open: open-slides
 
 clean:
-	$(MAKE) -C paper clean
 	$(MAKE) -C slides clean
 
-.PHONY: all $(PAPER) paper $(SLIDES) slides open open-paper open-slides clean
+.PHONY: all $(PAPER) $(SLIDES) slides open open-slides clean

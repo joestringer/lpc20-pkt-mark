@@ -2,7 +2,6 @@
 
 [In Proceedings][lpc-talk] of [Linux Plumbers Conference 20XX][lpc-conf].
 
-[Full PDF](https://github.com/joestringer/<repo>/blob/master/<title>.pdf)
 [Slides PDF](https://github.com/joestringer/<repo>/blob/master/<title>-slides.pdf)
 
 [lpc-talk]: https://linuxplumbersconf.org/event/N/contributions/M/
