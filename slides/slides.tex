@@ -1,4 +1,4 @@
-\documentclass[black,white]{beamer}
+\documentclass[black,white,aspectratio=169]{beamer}
 \usepackage{beamerthemesplit}
 \usepackage{amsmath}
 \usepackage{adjustbox}
@@ -28,6 +28,8 @@
 \useoutertheme{infolines}
 \useinnertheme{rectangles}
 
+\setbeamersize{text margin left=32pt,text margin right=32pt}
+
 \newcommand{\cmark}{\ding{51}}%
 \newcommand{\bigcmark}{{\large\textcolor{green}\cmark}}
 \newcommand{\xmark}{\ding{55}}
@@ -39,11 +41,15 @@
   \endgroup
 }
 
-\definecolor{ashgrey}{rgb}{0.7, 0.75, 0.71}
-\definecolor{charcoal}{rgb}{0.21, 0.27, 0.31}
-\definecolor{powderblue}{rgb}{0.69, 0.88, 0.9}
-\definecolor{layerblue}{RGB}{213, 234, 254}
-\newcommand\sectioncolor{\setbeamercolor{background canvas}{bg=layerblue}}
+\definecolor{ashgrey}{rgb}{0.7,0.75,0.71}
+\definecolor{charcoal}{rgb}{0.21,0.27,0.31}
+\definecolor{powderblue}{rgb}{0.69,0.88,0.9}
+\definecolor{layerblue}{RGB}{213,234,254}
+\definecolor{lpcyellow}{RGB}{246,243,234}
+\newcommand\sectioncolor{\setbeamercolor{background canvas}{bg=lpcyellow}}
+
+\setbeamertemplate{background canvas}[default]
+\setbeamercolor{background canvas}{bg=lpcyellow}
 
 % Align hash to font
 \let\oldhash\#%
@@ -64,27 +70,36 @@
 \institute{Cilium.io}
 \author[Joe Stringer]{Joe Stringer}
 
+\setbeamertemplate{headline}
+{
+    \leavevmode%
+    \hbox{%
+        \begin{beamercolorbox}[wd=\paperwidth,ht=2.25ex,dp=1ex,center]{}
+            \insertsection
+        \end{beamercolorbox}
+    }
+    \vskip0pt
+}
 \setbeamertemplate{footline}
 {
     \leavevmode%
     \hbox{%
-        \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
-            \usebeamerfont{author in head/foot}\insertshortauthor
+        \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,left]{}%
+            \usebeamerfont{date in head/foot}\hspace*{2ex}\insertshortdate{}
         \end{beamercolorbox}%
-        \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
+        \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{}%
             \usebeamerfont{title in head/foot}\insertshorttitle
         \end{beamercolorbox}%
-        \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}%
-            \usebeamerfont{date in head/foot}\insertshortdate{}\hspace*{2em}
+        \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,right]{}%
             \insertframenumber{} / \inserttotalframenumber\hspace*{2ex}
         \end{beamercolorbox}}%
         \vskip0pt%
 }
 
 \newcommand\newsectionpage[1]{
-    \section*{#1}
+    \section{#1}
     {\sectioncolor
-        \begin{frame}
+        \begin{frame}[plain]
             \vfill
             \centering
             \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
@@ -103,17 +118,19 @@
     \textcolor{red}{#1}
 }
 
-\date[August 24-28, 2020]{Linux Plumbers 2020, on the wider Internet}
+\date[August 24, 2020]{}
 
 \begin{document}
     \section*{Introduction}
-    {\sectioncolor
-    \begin{frame}
-        \titlepage
-        \begin{figure}
-            \includegraphics[scale=0.2]{lpc-logo.png}
-        \end{figure}
-    \end{frame}
+    {
+        \usebackgroundtemplate%
+        {%
+          \includegraphics[width=\paperwidth,height=\paperheight]{background.jpg}%
+        }
+        \begin{frame}[plain]
+            \vspace*{8ex}
+            \titlepage
+        \end{frame}
     }
 
     \begin{frame}{Overview}
@@ -252,6 +269,7 @@
     \appendix
     \backupbegin
 
+    \section*{Appendix}
     \begin{frame}{Backup Slide}
     \end{frame}
 
