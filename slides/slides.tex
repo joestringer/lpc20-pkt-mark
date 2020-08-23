@@ -517,17 +517,25 @@
         % There's this other aspect here where it's really up to each project
         % that cares to figure out the potential bitwise conflict with other
         % individual projects.
-        %
-        % TODO: Insert Boromir
-        \begin{itemize}
-            \item Required reading: network stack diagram~\medskip
-            \item Distinct bits do not guarantee integration~\smallskip
-            \begin{itemize}
-                \item skb, conn matches may steer packets~\medskip
-            \end{itemize}
-             \item Fun: replies disappear~\medskip
-             \item Proxies: Double the connections, double the fun~\medskip
-        \end{itemize}
+
+        \vfill
+        \begin{table}
+            \begin{subtable}[l]{0.7\textwidth}
+                \begin{itemize}
+                    \item Required reading: network stack diagram~\medskip
+                    \item Distinct bits do not guarantee integration~\smallskip
+                    \begin{itemize}
+                        \item skb, conn matches may steer packets~\medskip
+                    \end{itemize}
+                     \item Fun: replies disappear~\medskip
+                     \item Proxies: Double the connections, double the fun~\medskip
+                \end{itemize}
+            \end{subtable}
+            \begin{subtable}[r]{0.25\textwidth}
+                \includegraphics[width=0.6\textwidth]{boromir.jpg}
+            \end{subtable}
+        \end{table}
+        \vfill
     \end{frame}
 
     \newsectionpage{Evaluation}
