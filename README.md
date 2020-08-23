@@ -5,7 +5,7 @@ the wider Internet.
 
 [Slides PDF](https://github.com/joestringer/lpc20-pkt-mark/blob/master/lpc20-pkt-mark-slides.pdf)
 
-[lpc-talk]: https://linuxplumbersconf.org/event/7/contributions/697/
+[lpc-talk]: https://linuxplumbersconf.org/event/7/contributions/683/
 [lpc-conf]: https://www.linuxplumbersconf.org/event/7/
 
 ## Abstract
