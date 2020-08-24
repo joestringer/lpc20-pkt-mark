@@ -261,6 +261,10 @@
     % the base networking connectivity, you're quite welcome to - we have a
     % half dozen getting started guides in the Cilium documentation for various
     % other network plugins.
+    %
+    % So what I'm interested to look at here is *interoperability*. How do
+    % network control software writers use the mark in ways that allow other
+    % software to also work?
     {
         \usebackgroundtemplate%
         {%
@@ -568,7 +572,7 @@
         \end{itemize}
     \end{frame}
 
-    \begin{frame}{One does not simply understand skb->mark}
+    \begin{frame}{One does not simply understand skb mark}
         % Mark doesn't operate in a vacuum. Ultimately you must not only
         % understand whether to set/not set specific bits, but depending on
         % which features you intend to reuse, you may need to understand how
@@ -605,7 +609,7 @@
     % Obviously it is functional for specific use cases, but does it broadly
     % provide an interoperability story for network control software?
 
-    \begin{frame}{Properties of skb->mark}
+    \begin{frame}{Properties of skb mark}
         \begin{itemize}
             \item Powerful mechanism for cross-subsystem programming~\medskip
                 % No predefined semantics assignment. Lots of freedom to define
@@ -658,16 +662,17 @@
             \item ``If only I had more bits...''~\medskip
             \item How can we get more?~\smallskip
             \begin{itemize}
-                \item Extend the kernel..~\smallskip
-                    % Not ruling this out, but I'm also aware there are other
-                    % potential avenues to explore.
-                %    \todo{CONFIG\_SKB\_EXTENSIONS}
-                \item Consolidate datapath usage within primary subsystem~\medskip
+                \item Consolidate subsystem usage~\medskip
                     % Ie don't split half your logic into iptables. Embrace
                     % eBPF if that's where you're at. Or embrace OVS if that's
                     % what you use.
-                %\item \todo{tproxy eBPF - saved 16 bits of 32-bit mark} \bigskip
-                %\item \todo{floated - eBPF/xfrm} \bigskip
+                    %
+                    %\item \todo{tproxy eBPF - saved 16 bits of 32-bit mark} \bigskip
+                    %\item \todo{floated - eBPF/xfrm} \bigskip
+                \item Extend the kernel~\smallskip
+                    % Not ruling this out, but I'm also aware there are other
+                    % potential avenues to explore.
+                %    \todo{CONFIG\_SKB\_EXTENSIONS}
             \end{itemize}
         \end{itemize}
     \end{frame}
@@ -691,9 +696,9 @@
     \begin{frame}{Summary}
         \begin{itemize}
             \item Cloud native use cases~\medskip
+            \item Common themes~\medskip
             \item Challenges for interoperability~\medskip
                 % And how about you?
-            \item Mitigations \& dangers~\medskip
         \end{itemize}
     \end{frame}
 
