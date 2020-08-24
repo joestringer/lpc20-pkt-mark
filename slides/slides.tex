@@ -509,7 +509,7 @@
     %    \end{itemize}
     %\end{frame}
 
-    \newsectionpage{Observations}
+    \newsectionpage{Observations \& Challenges}
 
     \begin{frame}{Marking your territory}
         % Key point: Different approaches to using the mark. I own it all or
@@ -529,21 +529,6 @@
 
         \end{itemize}
     \end{frame}
-
-    % TODO: Come up with a better title
-    %\begin{frame}{Sharing is caring}
-    %\begin{frame}{No [subsystem] is an island}
-    %    \begin{itemize}
-    %        \item Each use case has an example of cross-system co-ordination~\smallskip
-    %        \begin{itemize}
-    %            \item Many cases get away with one or two bits~\smallskip
-    %            \item Deviations: Where functionality is ~\medskip
-    %        \end{itemize}
-    %        \item Some cases resemble a stack variable~\medskip
-    %    \end{itemize}
-    %    \todo{Can be either within a subsystem or across subsystem components
-    %          programmed by the same application}
-    %\end{frame}
 
     \begin{frame}{A tiny bit of overload}
         \begin{itemize}
@@ -565,10 +550,46 @@
             \end{itemize}
                 % So great, now we have semantic overlap for bits in the system.
                 % Can't imagine any way that's going to be a problem...
+                %
+                % Leads into how really the push for interoperability should
+                % be driven by usage. No point solving this if people aren't
+                % asking for it. Then how do we make the boundaries clear.
+        \end{itemize}
+    \end{frame}
+
+    %\begin{frame}{Interoperability}
+    \begin{frame}{Sharing is caring}
+        \begin{itemize}
+            \item Driven by common deployment scenarios~\medskip
+                % All Kubernetes networking plugins respect bit 15: DROP
+                %
+                % It's difficult to arbitrarily support integration with other
+                % plugins, because you don't necessarily know the ways that
+                % they're configuring the stack.
+            \item The clearer responsibility assignment you have, the better~\medskip
+                % Example: When Cilium provides just network policy on top of
+                %          another plugin for connectivity, we know we won't
+                %          have to configure the encryption bits.
+                %
+                % More difficult is when you're integrating with arbitrary
+                % iptables rules so you don't know if your traffic will be
+                % messed with and you also don't know if the mark will be
+                % thrashed...
+            \item Not free (in effort or in complexity)~\medskip
+            % What features do you need / what are you trading off?
+            % \item At what point do you lose the benefit of independent
+            %       software implementations and should just implement the
+            %       functionality yourself?
+            %
+            % Scope changes depending on how ambitious you are. Cilium aims to
+            % allow swapping in/out routing / service layers.
+            % Means that when you run alternative implementation, there must be
+            % co-ordination.
+
             % Which leads into how the mark usage isn't just about mark usage,
             % it's also about which fields you're matching and which order of
             % features / rules you hit, which combination of subsystems you
-            % hit, 
+            % hit, how they're programmed.
         \end{itemize}
     \end{frame}
 
@@ -602,78 +623,28 @@
         \vfill
     \end{frame}
 
-    \newsectionpage{Evaluation}
-
-    % TODO: Revisit this:
-    % I think we're trying to answer the question "Does the mark work?" here.
-    % Obviously it is functional for specific use cases, but does it broadly
-    % provide an interoperability story for network control software?
-
-    \begin{frame}{Properties of skb mark}
-        \begin{itemize}
-            \item Powerful mechanism for cross-subsystem programming~\medskip
-                % No predefined semantics assignment. Lots of freedom to define
-                % those when programming the kernel.
-            \item Frequent uncertainty whether bits are OK to use~\medskip
-                % Hopefully the fwmark registry will help with this, but that
-                % relies on your participation, hint hint!
-            \item Can be a crutch~\medskip
-                % Starts out fixing this one hacky case, ends up with mark overload
-            \item When you run out of bits, the ``fun'' starts~\medskip
-                % Both from design perspective but also from deploy/debug cycle
-        \end{itemize}
-    \end{frame}
-
-    \begin{frame}{Interoperability}
-        \begin{itemize}
-            \item Driven by common deployment scenarios~\medskip
-                % All Kubernetes networking plugins respect bit 15: DROP
-                %
-                % It's difficult to arbitrarily support integration with other
-                % plugins, because you don't necessarily know the ways that
-                % they're configuring the stack.
-            \item The clearer responsibility assignment you have, the better~\medskip
-                % Example: When Cilium provides just network policy on top of
-                %          another plugin for connectivity, we know we won't
-                %          have to configure the encryption bits.
-                %
-                % More difficult is when you're integrating with arbitrary
-                % iptables rules so you don't know if your traffic will be
-                % messed with and you also don't know if the mark will be
-                % thrashed...
-            \item Not free (in effort or in complexity)~\medskip
-            % What features do you need / what are you trading off?
-            % \item At what point do you lose the benefit of independent
-            %       software implementations and should just implement the
-            %       functionality yourself?
-        \end{itemize}
-        %\todo{Eg most of these software must work with k8s. Default configuration
-        %      makes BIT 15 -> Drop.} \bigskip
-        %\todo{Scope changes depending on how ambitious you are. Cilium aims to
-        %      allow swapping in/out routing / service layers.
-        %      Means that when you run alternative implementation, there must be
-        %      co-ordination.} \bigskip
-    \end{frame}
-
-    % Many features
-
-    \begin{frame}{Mitigating conflicts}
+    %\begin{frame}{Mitigating conflicts}
+    \begin{frame}{Less is more}
         \begin{itemize}
             \item ``If only I had more bits...''~\medskip
-            \item How can we get more?~\smallskip
-            \begin{itemize}
-                \item Consolidate subsystem usage~\medskip
-                    % Ie don't split half your logic into iptables. Embrace
-                    % eBPF if that's where you're at. Or embrace OVS if that's
-                    % what you use.
-                    %
-                    %\item \todo{tproxy eBPF - saved 16 bits of 32-bit mark} \bigskip
-                    %\item \todo{floated - eBPF/xfrm} \bigskip
-                \item Extend the kernel~\smallskip
-                    % Not ruling this out, but I'm also aware there are other
-                    % potential avenues to explore.
-                %    \todo{CONFIG\_SKB\_EXTENSIONS}
-            \end{itemize}
+            \item Consolidate subsystem usage~\medskip
+                % Can some use cases be implemented other ways?
+                %
+                % \item \todo{tproxy eBPF - saved 16 bits of 32-bit mark} \bigskip
+                % \item \todo{floated - eBPF/xfrm} \bigskip
+                %
+                % Don't split half your logic into iptables. Embrace eBPF if
+                % that's where you're at. Or embrace OVS if that's your stack.
+            \item Extend generic mark space?~\medskip
+                % CONFIG\_SKB\_EXTENSIONS
+                %
+                % Here's where I'm curious to get more feedback from the
+                % audience. Is this a pain point for you?
+            \item Formalize some use cases?~\medskip
+                % Maybe one of the use cases I mentioned could be handled with
+                % explicit APIs for certain subsystems, maybe skb extensions
+                % or control block or something behind the scenes. Or maybe
+                % you have another use case?
         \end{itemize}
     \end{frame}
 
@@ -692,13 +663,34 @@
     % One of the big angles we're looking at now is to move the last few bits
     % of iptables usage into eBPF directly.
 
-    \section*{Summary}
+    % TODO: Revisit this:
+    % I think we're trying to answer the question "Does the mark work?" here.
+    % Obviously it is functional for specific use cases, but does it broadly
+    % provide an interoperability story for network control software?
+
     \begin{frame}{Summary}
         \begin{itemize}
-            \item Cloud native use cases~\medskip
-            \item Common themes~\medskip
-            \item Challenges for interoperability~\medskip
-                % And how about you?
+            \item Powerful mechanism for cross-subsystem programming~\medskip
+                % No predefined semantics assignment. Lots of freedom to define
+                % those when programming the kernel.
+                %
+                % Presented several use cases that are common across multiple
+                % Kubernetes network plugins.
+            \item Uncertainty when bits are OK to use~\medskip
+                % Hopefully the fwmark registry will help with this, but that
+                % relies on your participation, hint hint!
+                %
+                % This is not necessarily enough to guarantee interoperability,
+                % but it's a first step to providing vision in the darkness.
+            %\item Can be a crutch~\medskip
+                % Starts out fixing this one hacky case, ends up with mark overload
+            \item There are more uses than there are bits~\medskip
+                % Many use cases can get away with just one bit. If everything
+                % is like that, then 32 is plenty. Extra metadata or hogging
+                % the bits works against this though.
+                %
+                % And when you run out of bits, the ``fun'' starts.
+                % Both from design perspective but also from deploy/debug cycle
         \end{itemize}
     \end{frame}
 
