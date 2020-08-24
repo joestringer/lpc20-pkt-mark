@@ -345,7 +345,8 @@
                 \item 1 bit: route towards bridge for DNAT~\smallskip
                 \item 30 bits representing hashed 3-tuple~\medskip
             \end{itemize}
-            \item  \{ OVS, netfilter \} -> routing -> \{ OVS, netfilter \}~\medskip
+            \item \{ eBPF, netfilter \} -> routing -> netfilter~\medskip
+            \item OVS -> routing -> OVS~\medskip
         \end{itemize}
     \end{frame}
 
@@ -353,6 +354,7 @@
         \begin{itemize}
             \item 1+ bits, request SNAT~\smallskip
             \begin{itemize}
+                \item Variation: 1 bit, Skip SNAT~\smallskip
                 \item Variation: 32 bits for source address selection~\medskip
                     % OpenShift "egress traffic from this entity with external
                     % IP ___" -> full IP into mark.
@@ -380,6 +382,8 @@
                 \item Reply via primary device~\smallskip
                 \begin{itemize}
                     %\item Elastic Network Interfaces (ENI) on AWS~\smallskip
+                    \item Default: Pod communicates via secondary device~\smallskip
+                    \item Inbound connections must reply via primary device~\smallskip
                     \item Store \& restore in connmark~\medskip
                 \end{itemize}
                 \item Route via management interface~\medskip
@@ -431,8 +435,9 @@
                 \item 16 bit tproxy port towards proxy~\smallskip
                 \item 16+ bit Identity from proxy~\medskip
             \end{itemize}
-            \item \{ eBPF, netfilter \} -> \{netfilter, routing \}
-            \item socket -> \{ eBPF, netfilter \}
+            \item eBPF -> \{ netfilter, routing \}
+            \item netfilter -> routing
+            \item socket -> \{ eBPF, netfilter \},
         \end{itemize}
     \end{frame}
 
